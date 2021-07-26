@@ -1,0 +1,6 @@
+[submodule "Flick/vendor/imgui"]
+	path = Flick/vendor/imgui
+	url = https://github.com/TheCherno/imgui
+[submodule "Flick/vendor/glm"]
+	path = Flick/vendor/glm
+	url = https://github.com/g-truc/glm
