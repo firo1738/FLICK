@@ -7,12 +7,12 @@
 
 namespace Flick
 {
-	VertexArray* VertexArray::Create()
+	Ref<VertexArray> VertexArray::Create()
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None: FI_CORE_ASSERT(false, "RendererAPI::None is not yet supported by Flick!"); return nullptr;
-		case  RendererAPI::API::OpenGL: return new OpenGLVertexArray();
+		case  RendererAPI::API::OpenGL: return std::make_shared<OpenGLVertexArray>();
 		}
 
 		FI_CORE_ASSERT(false, "Unknown RendererAPI!");

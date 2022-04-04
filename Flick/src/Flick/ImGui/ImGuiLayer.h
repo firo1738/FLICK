@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Flick/Layer.h"
+#include "Flick/Core/Layer.h"
 
 #include "Flick/Events/MouseEvent.h"
 #include "Flick/Events/KeyEvent.h"
@@ -8,7 +8,7 @@
 
 namespace Flick
 {
-	class FLICK_API ImGuiLayer : public Layer
+	class ImGuiLayer : public Layer
 	{
 	public:
 		ImGuiLayer();
@@ -16,7 +16,6 @@ namespace Flick
 
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
-		virtual void OnImGuiRender() override;
 
 		void Begin();
 		void End();

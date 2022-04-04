@@ -11,8 +11,8 @@ namespace Flick
 			:m_Width(width), m_Height(height)
 		{}
 
-		inline unsigned int GetWidth() const { return m_Width; }
-		inline unsigned int GetHeight() const { return m_Height; }
+		unsigned int GetWidth() const { return m_Width; }
+		unsigned int GetHeight() const { return m_Height; }
 
 		std::string ToString() const override
 		{

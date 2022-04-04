@@ -1,5 +1,5 @@
 workspace "Flick"
-	architecture "x64"
+	architecture "x86_64"
 	startproject "Sandbox"
 
 	configurations
@@ -7,6 +7,11 @@ workspace "Flick"
 		"Debug",
 		"Release",
 		"Dist"
+	}
+
+	flags
+	{
+		"MultiProcessorCompile"
 	}
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -17,6 +22,7 @@ IncludeDir["GLFW"] = "Flick/vendor/GLFW/include"
 IncludeDir["Glad"] = "Flick/vendor/Glad/include"
 IncludeDir["ImGui"] = "Flick/vendor/imgui"
 IncludeDir["glm"] = "Flick/vendor/glm"
+IncludeDir["stb_image"] = "Flick/vendor/stb_image"
 
 group "Dependencies"
 	include "Flick/vendor/GLFW"
@@ -42,6 +48,8 @@ project "Flick"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
@@ -59,7 +67,8 @@ project "Flick"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	links
@@ -75,7 +84,6 @@ project "Flick"
 
 		defines
 		{
-			"FI_PLATFORM_WINDOWS",
 			"FI_BUILD_DLL",
 			"GLFW_INCLUDE_NONE"
 		}
@@ -126,11 +134,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		systemversion "latest"
-
-		defines
-		{
-			"FI_PLATFORM_WINDOWS"
-		}
 
 		filter "configurations:Debug"
 			defines "FI_DEBUG"

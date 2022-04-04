@@ -28,45 +28,57 @@ namespace Flick
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
+		FI_PROFILE_FUNCTION();
+
 		glCreateVertexArrays(1, &m_RendererID);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		FI_PROFILE_FUNCTION();
+
 		glDeleteVertexArrays(1, &m_RendererID);
 	}
 
 	void OpenGLVertexArray::Bind() const
 	{
+		FI_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 	}
 
 	void OpenGLVertexArray::Unbind() const
 	{
+		FI_PROFILE_FUNCTION();
+
 		glBindVertexArray(0);
 	}
 
-	void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vb)
+	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vb)
 	{
+		FI_PROFILE_FUNCTION();
+
 		FI_CORE_ASSERT(vb->GetLayout().GetElements().size(), "Vertex Buffer layout not set!");
 
 		glBindVertexArray(m_RendererID);
 		vb->Bind();
 
-		uint32_t index = 0;
 		const auto& layout = vb->GetLayout();
 		for (const auto& element : layout)
 		{
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index, element.GetComponentCount(), ShaderDataTypeToOpenGLBaseType(element.Type), element.Normalized ? GL_TRUE : GL_FALSE, layout.GetStride(), (const void*)element.Offset);
-			index++;
+			glEnableVertexAttribArray(m_VertexBufferIndex);
+			glVertexAttribPointer(m_VertexBufferIndex, element.GetComponentCount(), ShaderDataTypeToOpenGLBaseType(element.Type), element.Normalized ? GL_TRUE : GL_FALSE, layout.GetStride(), (const void*)element.Offset);
+			m_VertexBufferIndex++;
 		}
 
 		m_VertexBuffers.push_back(vb);
+		m_VertexBufferIndex += layout.GetElements().size();
 	}
 
-	void OpenGLVertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& ib)
+	void OpenGLVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& ib)
 	{
+		FI_PROFILE_FUNCTION();
+
 		glBindVertexArray(m_RendererID);
 		ib->Bind();
 

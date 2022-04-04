@@ -26,19 +26,19 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -76,11 +76,13 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fipch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;FI_PLATFORM_WINDOWS;FI_BUILD_DLL;GLFW_INCLUDE_NONE;FI_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\Flick;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;FI_BUILD_DLL;GLFW_INCLUDE_NONE;FI_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;src\Flick;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -96,14 +98,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fipch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;FI_PLATFORM_WINDOWS;FI_BUILD_DLL;GLFW_INCLUDE_NONE;FI_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\Flick;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;FI_BUILD_DLL;GLFW_INCLUDE_NONE;FI_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;src\Flick;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -120,14 +123,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>fipch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;FI_PLATFORM_WINDOWS;FI_BUILD_DLL;GLFW_INCLUDE_NONE;FI_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\Flick;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;FI_BUILD_DLL;GLFW_INCLUDE_NONE;FI_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;src\Flick;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -140,37 +144,45 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\fipch.h" />
     <ClInclude Include="src\Flick.h" />
-    <ClInclude Include="src\Flick\Application.h" />
-    <ClInclude Include="src\Flick\Core.h" />
-    <ClInclude Include="src\Flick\EntryPoint.h" />
+    <ClInclude Include="src\Flick\Core\Application.h" />
+    <ClInclude Include="src\Flick\Core\Core.h" />
+    <ClInclude Include="src\Flick\Core\EntryPoint.h" />
+    <ClInclude Include="src\Flick\Core\Input.h" />
+    <ClInclude Include="src\Flick\Core\KeyCodes.h" />
+    <ClInclude Include="src\Flick\Core\Layer.h" />
+    <ClInclude Include="src\Flick\Core\LayerStack.h" />
+    <ClInclude Include="src\Flick\Core\Log.h" />
+    <ClInclude Include="src\Flick\Core\MouseCodes.h" />
+    <ClInclude Include="src\Flick\Core\Timestep.h" />
+    <ClInclude Include="src\Flick\Core\Window.h" />
+    <ClInclude Include="src\Flick\Debug\Instrumentor.h" />
     <ClInclude Include="src\Flick\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Flick\Events\Event.h" />
     <ClInclude Include="src\Flick\Events\KeyEvent.h" />
     <ClInclude Include="src\Flick\Events\MouseEvent.h" />
     <ClInclude Include="src\Flick\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\Flick\Input.h" />
-    <ClInclude Include="src\Flick\KeyCodes.h" />
-    <ClInclude Include="src\Flick\Layer.h" />
-    <ClInclude Include="src\Flick\LayerStack.h" />
-    <ClInclude Include="src\Flick\Log.h" />
-    <ClInclude Include="src\Flick\MouseButtonCodes.h" />
     <ClInclude Include="src\Flick\Renderer\Buffer.h" />
     <ClInclude Include="src\Flick\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Flick\Renderer\OrthographicCamera.h" />
+    <ClInclude Include="src\Flick\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Flick\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Flick\Renderer\Renderer.h" />
+    <ClInclude Include="src\Flick\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Flick\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Flick\Renderer\Shader.h" />
+    <ClInclude Include="src\Flick\Renderer\SubTexture2D.h" />
+    <ClInclude Include="src\Flick\Renderer\Texture.h" />
     <ClInclude Include="src\Flick\Renderer\VertexArray.h" />
-    <ClInclude Include="src\Flick\Window.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
-    <ClInclude Include="src\fipch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -586,30 +598,40 @@
     <ClInclude Include="vendor\glm\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
+    <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Flick\Application.cpp" />
+    <ClCompile Include="src\Flick\Core\Application.cpp" />
+    <ClCompile Include="src\Flick\Core\Input.cpp" />
+    <ClCompile Include="src\Flick\Core\Layer.cpp" />
+    <ClCompile Include="src\Flick\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Flick\Core\Log.cpp" />
+    <ClCompile Include="src\Flick\Core\Window.cpp" />
     <ClCompile Include="src\Flick\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Flick\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Flick\Layer.cpp" />
-    <ClCompile Include="src\Flick\LayerStack.cpp" />
-    <ClCompile Include="src\Flick\Log.cpp" />
     <ClCompile Include="src\Flick\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Flick\Renderer\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Flick\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Flick\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Flick\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Flick\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Flick\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Flick\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Flick\Renderer\SubTexture2D.cpp" />
+    <ClCompile Include="src\Flick\Renderer\Texture.cpp" />
     <ClCompile Include="src\Flick\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\fipch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">

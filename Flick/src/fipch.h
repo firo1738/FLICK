@@ -8,13 +8,15 @@
 
 #include <string>
 #include <sstream>
+#include <array>
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Flick/Log.h"
+#include "Flick/Core/Log.h"
+
+#include "Flick/Debug/Instrumentor.h"
 
 #ifdef FI_PLATFORM_WINDOWS
-	#include <Windows.h>
+#include <Windows.h>
 #endif // if the project is being used on windows
-

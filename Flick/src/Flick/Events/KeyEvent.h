@@ -1,29 +1,30 @@
 #pragma once
 
-#include "Event.h"
+#include "Flick/Events/Event.h"
+#include "Flick/Core/Input.h"
 
 namespace Flick
 {
-	class FLICK_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public:
-		inline int GetKeyCode() const { return m_KeyCode; }
+		KeyCode GetKeyCode() const { return m_KeyCode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
-		KeyEvent(int keycode)
+		KeyEvent(KeyCode keycode)
 			:m_KeyCode(keycode) {}
 
-		int m_KeyCode;
+		KeyCode m_KeyCode;
 	};
 
-	class FLICK_API KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(int keycode, int repeatcount)
+		KeyPressedEvent(KeyCode keycode, int repeatcount)
 			:KeyEvent(keycode), m_RepeatCount(repeatcount) {}
 
-		inline int GetRepeatCount() const { return m_RepeatCount; }
+		int GetRepeatCount() const { return m_RepeatCount; }
 
 		std::string ToString() const override
 		{
@@ -37,10 +38,10 @@ namespace Flick
 		int m_RepeatCount;
 	};
 
-	class FLICK_API KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(int keycode)
+		KeyReleasedEvent(KeyCode keycode)
 			:KeyEvent(keycode)
 		{}
 
@@ -54,10 +55,10 @@ namespace Flick
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 
-	class FLICK_API KeyTypedEvent : public KeyEvent
+	class KeyTypedEvent : public KeyEvent
 	{
 	public:
-		KeyTypedEvent(int keycode)
+		KeyTypedEvent(KeyCode keycode)
 			: KeyEvent(keycode) {}
 
 		std::string ToString() const override
