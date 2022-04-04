@@ -21,6 +21,8 @@ static const char* s_TileMap =
 "lDDCDDDDDDDDDDDDDDDDDDDr"
 "TBBBBBBBBBBBBBBBBBBBBBBY";
 
+float rotation;
+
 Sandbox2D::Sandbox2D()
 	:Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f, true)
 {}
@@ -52,6 +54,10 @@ void Sandbox2D::OnAttach()
 	m_TileMap['l'] = Flick::SubTexture2D::createFromCoords(m_Tile_Map, { 7, 6 }, { 16.875, 16.875 });
 	m_TileMap['r'] = Flick::SubTexture2D::createFromCoords(m_Tile_Map, { 9, 6 }, { 16.875, 16.875 });
 	
+	Flick::FrameBufferSpecifications fbspec;
+	fbspec.Width = 1280;
+	fbspec.Height = 720;
+	m_FrameBuffer = Flick::FrameBuffer::create(fbspec);
 
 	//Particle attached by particleprops
 	m_Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
@@ -81,6 +87,7 @@ void Sandbox2D::OnUpdate(Flick::Timestep ts)
 	Flick::Renderer2D::ResetStats();
 	{
 		FI_PROFILE_SCOPE("Renderer::Prep");
+		m_FrameBuffer->bind();
 		Flick::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 		Flick::RenderCommand::Clear();
 	}
@@ -137,7 +144,7 @@ void Sandbox2D::OnUpdate(Flick::Timestep ts)
 	Flick::Renderer2D::BeginScene(m_CameraController.GetCamera());
 	//Flick::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, m_Tile_Door);
 	//Flick::Renderer2D::DrawQuad({ 1.0f, 0.0f, 0.5f }, { 1.0f, 2.0f }, m_Tile_Roof);
-	//Flick::Renderer2D::DrawQuad({ -1.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, m_Sq_Panda);
+	//Flick::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.5f }, { 10.0f, 10.0f }, m_Sq_Panda);
 
 	//tilemap
 	for (uint32_t y = 0; y < m_MapHeight; y++) {
@@ -152,12 +159,14 @@ void Sandbox2D::OnUpdate(Flick::Timestep ts)
 			{
 				texture = m_Sq_Panda;
 			}
-
-			Flick::Renderer2D::DrawQuad({ x - m_MapWidth / 2.0f, m_MapHeight - y - m_MapHeight / 2.0f, 0.5f }, { 1.0f, 1.0f }, texture);
+	
+			Flick::Renderer2D::DrawQuad({ x - m_MapWidth / 2.0f, m_MapHeight - y - m_MapHeight / 2.0f, 0.5f }, { 1.0f, 1.0f },
+			texture);
 		}
 	}
 
 	Flick::Renderer2D::EndScene();
+	m_FrameBuffer->unBind();
 }
 
 void Sandbox2D::OnImGuiRender()
@@ -229,7 +238,7 @@ void Sandbox2D::OnImGuiRender()
 			ImGui::EndMenuBar();
 		}
 
-		ImGui::Begin("Sandbox2D");
+		ImGui::Begin("Settings");
 
 		auto stats = Flick::Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
@@ -238,10 +247,15 @@ void Sandbox2D::OnImGuiRender()
 		ImGui::Text("Vertex Count: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Index Count: %d", stats.GetTotalIndexCount());
 
-		uint32_t textureID = m_Tex_Checkerbox->getRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ 256, 256 });
+		m_CameraController.setRotation(rotation);
+
+		ImGui::SliderAngle("rotation", &rotation);
+
+		uint32_t textureID = m_FrameBuffer->getColorAttachmentRendererID();
+		ImGui::Image((void*)textureID, ImVec2{ 1280, 720 }, { 1, 1 }, { 0, 0 });
 
 		ImGui::End();
+		
 		//dockspace end()
 		ImGui::End();
 	}
@@ -256,8 +270,8 @@ void Sandbox2D::OnImGuiRender()
 		ImGui::Text("Vertex Count: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Index Count: %d", stats.GetTotalIndexCount());
 
-		uint32_t textureID = m_Tex_Checkerbox->getRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ 256, 256 });
+		uint32_t textureID = m_Tex_Bird->getRendererID();
+		ImGui::Image((void*)textureID, ImVec2{ 1280, 720 }, { 1, 1 }, {0, 0});
 
 		ImGui::End();
 	}

@@ -18,6 +18,7 @@
 #include "Flick/Renderer/RenderCommand.h"
 
 #include "Flick/Renderer/Buffer.h"
+#include "Flick/Renderer/FrameBuffer.h"
 #include "Flick/Renderer/VertexArray.h"
 #include "Flick/Renderer/Shader.h"
 #include "Flick/Renderer/Texture.h"

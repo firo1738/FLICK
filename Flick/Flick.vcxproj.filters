@@ -1418,6 +1418,8 @@
     </ClInclude>
     <ClInclude Include="src\fipch.h" />
     <ClInclude Include="src\Flick\Renderer\SubTexture2D.h" />
+    <ClInclude Include="src\Flick\Renderer\FrameBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Flick\Core\Application.cpp">
@@ -1505,5 +1507,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Flick\Renderer\SubTexture2D.cpp" />
+    <ClCompile Include="src\Flick\Renderer\FrameBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
   </ItemGroup>
 </Project>

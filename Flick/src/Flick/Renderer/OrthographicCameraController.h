@@ -32,6 +32,8 @@ namespace Flick
 		float GetZoomLevel() const { return m_ZoomLevel; }
 		void SetZoomLevel(float level) { m_ZoomLevel = level; calculateView(); }
 
+		void setRotation(float rotation) { m_CameraRotation = rotation * m_CameraRotationSpeed; }
+
 		const OrthographicCameraBounds& GetBounds() const { return m_Bounds; }
 	private:
 		void calculateView();
