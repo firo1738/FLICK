@@ -80,8 +80,12 @@ namespace Flick
 	{
 		FI_PROFILE_FUNCTION();
 
-		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-		calculateView();
+		OnResize((float)e.GetWidth(), (float)e.GetHeight());
 		return false;
+	}
+
+	void OrthographicCameraController::OnResize(float width, float height) {
+		m_AspectRatio = width / height;
+		calculateView();
 	}
 }

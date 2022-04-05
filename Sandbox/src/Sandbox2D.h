@@ -21,19 +21,11 @@ private:
 
 	//Temp
 	Flick::Ref<Flick::Texture2D> m_Tex_Checkerbox;
-	Flick::Ref<Flick::Texture2D> m_Tex_Bird;
-	Flick::Ref<Flick::Texture2D> m_Tile_Map;
-	Flick::Ref<Flick::Texture2D> m_Sq;
-	Flick::Ref<Flick::SubTexture2D> m_Tile_Door;
-	Flick::Ref<Flick::SubTexture2D> m_Tile_Roof;
-	Flick::Ref<Flick::SubTexture2D> m_Sq_Panda;
 
 	int m_MapWidth, m_MapHeight;
 	std::unordered_map<char, Flick::Ref<Flick::SubTexture2D>> m_TileMap;
 
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
-
-	Flick::Ref<Flick::FrameBuffer> m_FrameBuffer;
 
 	ParticleSystem m_ParticleSystem;
 	ParticleProps m_Particle;

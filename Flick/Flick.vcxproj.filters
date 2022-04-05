@@ -114,6 +114,9 @@
     <ClInclude Include="src\Flick\Renderer\Buffer.h">
       <Filter>src\Flick\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Flick\Renderer\FrameBuffer.h">
+      <Filter>src\Flick\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Flick\Renderer\GraphicsContext.h">
       <Filter>src\Flick\Renderer</Filter>
     </ClInclude>
@@ -138,6 +141,9 @@
     <ClInclude Include="src\Flick\Renderer\Shader.h">
       <Filter>src\Flick\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Flick\Renderer\SubTexture2D.h">
+      <Filter>src\Flick\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Flick\Renderer\Texture.h">
       <Filter>src\Flick\Renderer</Filter>
     </ClInclude>
@@ -148,6 +154,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
@@ -167,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fipch.h">
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="vendor\glm\glm\common.hpp">
       <Filter>vendor\glm\glm</Filter>
@@ -1416,10 +1428,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\fipch.h" />
-    <ClInclude Include="src\Flick\Renderer\SubTexture2D.h" />
-    <ClInclude Include="src\Flick\Renderer\FrameBuffer.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Flick\Core\Application.cpp">
@@ -1449,6 +1457,9 @@
     <ClCompile Include="src\Flick\Renderer\Buffer.cpp">
       <Filter>src\Flick\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Flick\Renderer\FrameBuffer.cpp">
+      <Filter>src\Flick\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Flick\Renderer\OrthographicCamera.cpp">
       <Filter>src\Flick\Renderer</Filter>
     </ClCompile>
@@ -1470,6 +1481,9 @@
     <ClCompile Include="src\Flick\Renderer\Shader.cpp">
       <Filter>src\Flick\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Flick\Renderer\SubTexture2D.cpp">
+      <Filter>src\Flick\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Flick\Renderer\Texture.cpp">
       <Filter>src\Flick\Renderer</Filter>
     </ClCompile>
@@ -1480,6 +1494,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
@@ -1506,8 +1523,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Flick\Renderer\SubTexture2D.cpp" />
-    <ClCompile Include="src\Flick\Renderer\FrameBuffer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp" />
   </ItemGroup>
 </Project>

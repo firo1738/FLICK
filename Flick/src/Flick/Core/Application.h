@@ -17,7 +17,7 @@ namespace Flick
 	class Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "Flick App");
 		virtual ~Application();
 
 		void OnEvent(Event& e);

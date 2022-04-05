@@ -149,3 +149,50 @@ project "Sandbox"
 			defines "FI_DIST"
 			runtime "Release"
 			optimize "on"
+
+project "Flick-Editor"
+	location "Flick-Editor"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"Flick/vendor/spdlog/include",
+		"Flick/src",
+		"Flick/vendor",
+		"%{IncludeDir.glm}"
+	}
+
+	links
+	{
+		"Flick"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+		filter "configurations:Debug"
+			defines "FI_DEBUG"
+			runtime "Debug"
+			symbols "on"
+
+		filter "configurations:Release"
+			defines "FI_RELEASE"
+			runtime "Release"
+			optimize "on"
+
+		filter "configurations:Dist"
+			defines "FI_DIST"
+			runtime "Release"
+			optimize "on"

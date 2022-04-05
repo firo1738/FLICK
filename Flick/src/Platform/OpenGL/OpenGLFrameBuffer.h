@@ -13,13 +13,15 @@ namespace Flick {
 		virtual void bind() override;
 		virtual void unBind() override;
 
+		virtual void Resize(uint32_t width, uint32_t height) override;
+
 		virtual uint32_t getColorAttachmentRendererID() const override { return m_ColorAttachment; }
 
 		virtual const FrameBufferSpecifications& getSpecifications() const override { return m_Specifications; }
 	private:
-		uint32_t m_RendererID;
-		uint32_t m_ColorAttachment;
-		uint32_t m_DepthAttachment;
+		uint32_t m_RendererID = 0;
+		uint32_t m_ColorAttachment = 0;
+		uint32_t m_DepthAttachment = 0;
 		FrameBufferSpecifications m_Specifications;
 	};
 }
