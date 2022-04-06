@@ -17,10 +17,15 @@ namespace Flick
 		virtual void OnAttach() override;
 		virtual void OnDetach() override;
 
+		virtual void OnEvent(Event& e) override;
+
+		bool BlockEvents(bool block) { return m_Block = block; }
+
 		void Begin();
 		void End();
 		
 	private:
+		bool m_Block = true;
 		float m_Time = 0.0f;
 	};
 }

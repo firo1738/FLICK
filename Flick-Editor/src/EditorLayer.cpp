@@ -73,7 +73,8 @@ namespace Flick {
 		FI_PROFILE_FUNCTION();
 
 		//update
-		m_CameraController.OnUpdate(ts);
+		if (m_ViewportFocus)
+			m_CameraController.OnUpdate(ts);
 
 		//render
 		Renderer2D::ResetStats();
@@ -228,16 +229,20 @@ namespace Flick {
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{0, 0});
 			ImGui::Begin("Viewport");
 
+			m_ViewportFocus = ImGui::IsWindowFocused();
+			m_ViewportHover = ImGui::IsWindowHovered();
+			Application::Get().GetImguiLayer()->BlockEvents(!m_ViewportFocus || !m_ViewportHover);
+
 			ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-			if (m_viewport != *((glm::vec2*)&viewportPanelSize)) {
+			if (m_Viewport != *((glm::vec2*)&viewportPanelSize)) {
 				m_FrameBuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
-				m_viewport = {viewportPanelSize.x, viewportPanelSize.y};
+				m_Viewport = {viewportPanelSize.x, viewportPanelSize.y};
 
 				m_CameraController.OnResize(viewportPanelSize.x, viewportPanelSize.y);
 			}
 
 			uint32_t textureID = m_FrameBuffer->getColorAttachmentRendererID();
-			ImGui::Image((void*)textureID, ImVec2{ m_viewport.x, m_viewport.y }, { 0, 1 }, { 1, 0 });
+			ImGui::Image((void*)textureID, ImVec2{ m_Viewport.x, m_Viewport.y }, { 0, 1 }, { 1, 0 });
 
 			ImGui::End();
 			ImGui::PopStyleVar();

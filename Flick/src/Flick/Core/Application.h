@@ -29,6 +29,8 @@ namespace Flick
 
 		Window& GetWindow() { return *m_Window; }
 
+		ImGuiLayer* GetImguiLayer() { return m_ImGuiLayer; }
+
 		static Application& Get() { return *s_Instance; }
 	private:
 		void Run();

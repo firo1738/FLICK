@@ -21,6 +21,8 @@ namespace Flick
 
 	void ImGuiLayer::OnAttach()
 	{
+		FI_PROFILE_FUNCTION();
+
 		//setup dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -54,13 +56,25 @@ namespace Flick
 
 	void ImGuiLayer::OnDetach()
 	{
+		FI_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
 	}
 
+	void ImGuiLayer::OnEvent(Event& e) {
+		if (m_Block) {
+			ImGuiIO& io = ImGui::GetIO();
+			e.Handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+			e.Handled |= e.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+		}
+	}
+
 	void ImGuiLayer::Begin()
 	{
+		FI_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -68,6 +82,8 @@ namespace Flick
 
 	void ImGuiLayer::End()
 	{
+		FI_PROFILE_FUNCTION();
+
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
 		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());

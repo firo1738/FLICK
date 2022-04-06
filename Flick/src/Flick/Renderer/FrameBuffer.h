@@ -13,6 +13,8 @@ namespace Flick {
 
 	class FrameBuffer {
 	public:
+		virtual ~FrameBuffer() = default;
+
 		virtual void bind() = 0;
 		virtual void unBind() = 0;
 

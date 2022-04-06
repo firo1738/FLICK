@@ -32,7 +32,9 @@ namespace Flick {
 
 		glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 
-		glm::vec2 m_viewport;
+		bool m_ViewportFocus = false;
+		bool m_ViewportHover = false;
+		glm::vec2 m_Viewport;
 
 		Ref<FrameBuffer> m_FrameBuffer;
 	};
