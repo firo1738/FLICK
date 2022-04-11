@@ -23,6 +23,8 @@ IncludeDir["Glad"] = "Flick/vendor/Glad/include"
 IncludeDir["ImGui"] = "Flick/vendor/imgui"
 IncludeDir["glm"] = "Flick/vendor/glm"
 IncludeDir["stb_image"] = "Flick/vendor/stb_image"
+IncludeDir["entt"] = "Flick/vendor/entt/include"
+
 
 group "Dependencies"
 	include "Flick/vendor/GLFW"
@@ -68,7 +70,9 @@ project "Flick"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.entt}"
+
 	}
 
 	links
@@ -124,7 +128,8 @@ project "Sandbox"
 		"Flick/vendor/spdlog/include",
 		"Flick/src",
 		"Flick/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links
@@ -171,7 +176,8 @@ project "Flick-Editor"
 		"Flick/vendor/spdlog/include",
 		"Flick/src",
 		"Flick/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links

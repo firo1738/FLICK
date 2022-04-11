@@ -18,6 +18,9 @@ namespace Flick {
 	private:
 		Flick::OrthographicCameraController m_CameraController;
 
+		Ref<Scene> m_ActiveScene;
+		entt::entity m_SquareEntity;
+
 		//Temp
 		Ref<Texture2D> m_Tex_Checkerbox;
 		Ref<Texture2D> m_Tex_Bird;
@@ -29,8 +32,6 @@ namespace Flick {
 
 		int m_MapWidth, m_MapHeight;
 		std::unordered_map<char, Ref<SubTexture2D>> m_TileMap;
-
-		glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 
 		bool m_ViewportFocus = false;
 		bool m_ViewportHover = false;

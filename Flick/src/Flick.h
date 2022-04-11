@@ -12,6 +12,9 @@
 
 #include "Flick/ImGui/ImGuiLayer.h"
 
+#include "Flick/Scene/Scene.h"
+#include "Flick/Scene/Components.h"
+
 //----Renderer-----------
 #include "Flick/Renderer/Renderer.h"
 #include "Flick/Renderer/Renderer2D.h"
@@ -23,6 +26,17 @@
 #include "Flick/Renderer/Shader.h"
 #include "Flick/Renderer/Texture.h"
 #include "Flick/Renderer/SubTexture2D.h"
+
+//vulkan renderer stuff to be added
+//render pass
+//graphics pipeline
+//swapchain
+//images
+//imageviews
+//command buffers
+//command pools
+//descriptor pool
+//descriptor sets
 
 #include "Flick/Renderer/OrthographicCamera.h"
 //--------------------------

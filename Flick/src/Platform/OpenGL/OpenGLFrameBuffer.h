@@ -20,8 +20,8 @@ namespace Flick {
 		virtual const FrameBufferSpecifications& getSpecifications() const override { return m_Specifications; }
 	private:
 		uint32_t m_RendererID = 0;
-		uint32_t m_ColorAttachment = 0;
-		uint32_t m_DepthAttachment = 0;
+		uint32_t m_ColorAttachment;
+		uint32_t m_DepthAttachment;
 		FrameBufferSpecifications m_Specifications;
 	};
 }

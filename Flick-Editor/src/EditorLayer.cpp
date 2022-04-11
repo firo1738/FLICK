@@ -6,22 +6,21 @@
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
-const int s_MapWidth = 24;
-static const char* s_TileMap = 
-"LUUUUUUUUUUUUUUUUUUUUUUR"
-"lDDDDDDDDDDDDDDDDDDDDDDr"
-"lDDCCDDDDDDDDDDDDDDDDDDr"
-"lDDDDDDDDDDDDDDDDDDCCDDr"
-"lDDDDDDDDDDCDDDDDDDDDDDr"
-"lDDDDDDDDDDDDDDDDDDDDDDr"
-"lDDDDDDDCDDDDDDDDCDDDDDr"
-"lDDDDDDDDDDDDDDDDDDDCCDr"
-"lDDDDDDDDDDDDDDDDDDDDDDr"
-"lDDDDDDDDDDCCDDDDDDDDDDr"
-"lDDCDDDDDDDDDDDDDDDDDDDr"
-"TBBBBBBBBBBBBBBBBBBBBBBY";
-
-float rotation;
+//const int s_MapWidth = 24;
+//static const char* s_TileMap = 
+//"LUUUUUUUUUUUUUUUUUUUUUUR"
+//"lDDDDDDDDDDDDDDDDDDDDDDr"
+//"lDDCCDDDDDDDDDDDDDDDDDDr"
+//"lDDDDDDDDDDDDDDDDDDCCDDr"
+//"lDDDDDDDDDDCDDDDDDDDDDDr"
+//"lDDDDDDDDDDDDDDDDDDDDDDr"
+//"lDDDDDDDCDDDDDDDDCDDDDDr"
+//"lDDDDDDDDDDDDDDDDDDDCCDr"
+//"lDDDDDDDDDDDDDDDDDDDDDDr"
+//"lDDDDDDDDDDCCDDDDDDDDDDr"
+//"lDDCDDDDDDDDDDDDDDDDDDDr"
+//"TBBBBBBBBBBBBBBBBBBBBBBY";
+//
 
 namespace Flick {
 	EditorLayer::EditorLayer()
@@ -33,34 +32,42 @@ namespace Flick {
 		FI_PROFILE_FUNCTION();
 
 		m_Tex_Checkerbox = Texture2D::Create("assets/textures/tex-checkerbox.png");
-		m_Tex_Bird = Texture2D::Create("assets/textures/tex-bird.png");
-		m_Tile_Map = Texture2D::Create("assets/game/textures/tilemap.png");
+		//m_Tex_Bird = Texture2D::Create("assets/textures/tex-bird.png");
+		//m_Tile_Map = Texture2D::Create("assets/game/textures/tilemap.png");
 		m_Sq = Texture2D::Create("assets/game/textures/square_nodetails.png");
-		m_Tile_Door = SubTexture2D::createFromCoords(m_Tile_Map, { 7, 1 }, { 16.875, 16.875 });
-		m_Tile_Roof = SubTexture2D::createFromCoords(m_Tile_Map, { 10, 3 }, { 16.95, 16.875 }, { 1, 2 });
+		//m_Tile_Door = SubTexture2D::createFromCoords(m_Tile_Map, { 7, 1 }, { 16.875, 16.875 });
+		//m_Tile_Roof = SubTexture2D::createFromCoords(m_Tile_Map, { 10, 3 }, { 16.95, 16.875 }, { 1, 2 });
 		m_Sq_Panda = SubTexture2D::createFromCoords(m_Sq, { 1, 1 }, { 128.2, 128 });
 
 		//tilemap
-		m_MapWidth = s_MapWidth;
-		m_MapHeight = strlen(s_TileMap) / s_MapWidth;
-
-		m_TileMap['L'] = SubTexture2D::createFromCoords(m_Tile_Map, { 7, 7 }, { 16.875, 16.875 });
-		m_TileMap['U'] = SubTexture2D::createFromCoords(m_Tile_Map, { 8, 7 }, { 16.875, 16.875 });
-		m_TileMap['R'] = SubTexture2D::createFromCoords(m_Tile_Map, { 9, 7 }, { 16.875, 16.875 });
-		m_TileMap['D'] = SubTexture2D::createFromCoords(m_Tile_Map, { 8, 6 }, { 16.875, 16.875 });
-		m_TileMap['C'] = SubTexture2D::createFromCoords(m_Tile_Map, { 13, 4 }, { 16.9, 16.875 });
-		m_TileMap['T'] = SubTexture2D::createFromCoords(m_Tile_Map, { 7, 5 }, { 16.875, 16.875 });
-		m_TileMap['B'] = SubTexture2D::createFromCoords(m_Tile_Map, { 8, 5 }, { 16.875, 16.875 });
-		m_TileMap['Y'] = SubTexture2D::createFromCoords(m_Tile_Map, { 9, 5 }, { 16.875, 16.875 });
-		m_TileMap['l'] = SubTexture2D::createFromCoords(m_Tile_Map, { 7, 6 }, { 16.875, 16.875 });
-		m_TileMap['r'] = SubTexture2D::createFromCoords(m_Tile_Map, { 9, 6 }, { 16.875, 16.875 });
+		//m_MapWidth = s_MapWidth;
+		//m_MapHeight = strlen(s_TileMap) / s_MapWidth;
+		//
+		//m_TileMap['L'] = SubTexture2D::createFromCoords(m_Tile_Map, { 7, 7 }, { 16.875, 16.875 });
+		//m_TileMap['U'] = SubTexture2D::createFromCoords(m_Tile_Map, { 8, 7 }, { 16.875, 16.875 });
+		//m_TileMap['R'] = SubTexture2D::createFromCoords(m_Tile_Map, { 9, 7 }, { 16.875, 16.875 });
+		//m_TileMap['D'] = SubTexture2D::createFromCoords(m_Tile_Map, { 8, 6 }, { 16.875, 16.875 });
+		//m_TileMap['C'] = SubTexture2D::createFromCoords(m_Tile_Map, { 13, 4 }, { 16.9, 16.875 });
+		//m_TileMap['T'] = SubTexture2D::createFromCoords(m_Tile_Map, { 7, 5 }, { 16.875, 16.875 });
+		//m_TileMap['B'] = SubTexture2D::createFromCoords(m_Tile_Map, { 8, 5 }, { 16.875, 16.875 });
+		//m_TileMap['Y'] = SubTexture2D::createFromCoords(m_Tile_Map, { 9, 5 }, { 16.875, 16.875 });
+		//m_TileMap['l'] = SubTexture2D::createFromCoords(m_Tile_Map, { 7, 6 }, { 16.875, 16.875 });
+		//m_TileMap['r'] = SubTexture2D::createFromCoords(m_Tile_Map, { 9, 6 }, { 16.875, 16.875 });
 
 		Flick::FrameBufferSpecifications fbspec;
 		fbspec.Width = 1280;
 		fbspec.Height = 720;
 		m_FrameBuffer = Flick::FrameBuffer::create(fbspec);
 
-		m_CameraController.SetZoomLevel(10.0f);
+		m_CameraController.SetZoomLevel(1.0f);
+
+		m_ActiveScene = CreateRef<Scene>();
+
+		auto square = m_ActiveScene->CreateEntity();
+		m_ActiveScene->Reg().emplace<TransformComponent>(square);
+		m_ActiveScene->Reg().emplace<SpriteRendererComponent>(square, glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
+
+		m_SquareEntity = square;
 	}
 
 	void EditorLayer::OnDetach()
@@ -78,69 +85,46 @@ namespace Flick {
 
 		//render
 		Renderer2D::ResetStats();
-		{
-			FI_PROFILE_SCOPE("Renderer::Prep");
-			m_FrameBuffer->bind();
-			RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-			RenderCommand::Clear();
-		}
+		m_FrameBuffer->bind();
+		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+		RenderCommand::Clear();
 
-#if 0
-		{
-			static float rotation = 0.0f;
-			rotation += ts * -50.0f;
-
-			FI_PROFILE_SCOPE("Renderer::Draw");
-			Renderer2D::BeginScene(m_CameraController.GetCamera());
-
-			Renderer2D::DrawRotatedQuad({ 1.0f, 0.0f }, { 0.8f, 0.8f }, glm::radians(-45.0f), { 0.8f, 0.2f, 0.3f, 1.0f });
-			Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-			Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-
-			Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, m_Tex_Checkerbox, 10.0f);
-
-			Renderer2D::DrawRotatedQuad({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, glm::radians(rotation), m_Tex_Bird, 20.0f);
-
-			Renderer2D::EndScene();
-
-			Renderer2D::BeginScene(m_CameraController.GetCamera());
-			for (float y = -5.0f; y < 5.0f; y += 0.5f)
-			{
-				for (float x = -5.0f; x < 5.0f; x += 0.5f)
-				{
-					glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
-					Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
-				}
-			}
-			Renderer2D::EndScene();
-		}
-#endif
+		
 
 		Flick::Renderer2D::BeginScene(m_CameraController.GetCamera());
 		//Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, m_Tile_Door);
 		//Renderer2D::DrawQuad({ 1.0f, 0.0f, 0.5f }, { 1.0f, 2.0f }, m_Tile_Roof);
-		//Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.5f }, { 10.0f, 10.0f }, m_Sq_Panda);
-
+		//
+		//Renderer2D::DrawRotatedQuad({ 1.0f, 0.0f, 0.5f }, { 10.0f, 10.0f }, glm::radians(-45.0f), { 0.8f, 0.2f, 0.3f, 1.0f });
+		//Renderer2D::DrawQuad({ -10.0f, -0.5f, 0.5f }, { 10.0f, 10.0f }, { 0.2f, 0.3f, 0.8f, 1.0f });
+		//
+		////Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.5f }, { 10.0f, 10.0f }, m_Sq_Panda);
+		//Renderer2D::DrawQuad({ 12.0f, 0.0f, 0.5f }, { 10.0f, 10.0f }, m_Tex_Checkerbox);
+		//
 		//tilemap
-		for (uint32_t y = 0; y < m_MapHeight; y++) {
-			for (uint32_t x = 0; x < m_MapWidth; x++)
-			{
-				char tiletype = s_TileMap[x + y * m_MapWidth];
-				Ref<SubTexture2D> texture;
-				if (m_TileMap.find(tiletype) != m_TileMap.end()) {
-					texture = m_TileMap[tiletype];
-				}
-				else
-				{
-					texture = m_Sq_Panda;
-				}
-		
-				Renderer2D::DrawQuad({ x - m_MapWidth / 2.0f, m_MapHeight - y - m_MapHeight / 2.0f, 0.5f }, { 1.0f, 1.0f },
-					texture);
-			}
-		}
+		//for (uint32_t y = 0; y < m_MapHeight; y++) {
+		//	for (uint32_t x = 0; x < m_MapWidth; x++)
+		//	{
+		//		char tiletype = s_TileMap[x + y * m_MapWidth];
+		//		Ref<SubTexture2D> texture;
+		//		if (m_TileMap.find(tiletype) != m_TileMap.end()) {
+		//			texture = m_TileMap[tiletype];
+		//		}
+		//		else
+		//		{
+		//			texture = m_Sq_Panda;
+		//		}
+		//
+		//		Renderer2D::DrawQuad({ x - m_MapWidth / 2.0f, m_MapHeight - y - m_MapHeight / 2.0f, 0.5f }, { 1.0f, 1.0f },
+		//			texture);
+		//	}
+		//}
+
+		//update scene
+		m_ActiveScene->OnUpdate(ts);
 
 		Flick::Renderer2D::EndScene();
+
 		m_FrameBuffer->unBind();
 	}
 
@@ -220,9 +204,8 @@ namespace Flick {
 			ImGui::Text("Vertex Count: %d", stats.GetTotalVertexCount());
 			ImGui::Text("Index Count: %d", stats.GetTotalIndexCount());
 
-			m_CameraController.setRotation(rotation);
-
-			ImGui::SliderAngle("rotation", &rotation);
+			auto& squareColor = m_ActiveScene->Reg().get<SpriteRendererComponent>(m_SquareEntity).Color;
+			ImGui::ColorEdit4("Color Editor", glm::value_ptr(squareColor));
 
 			ImGui::End();
 
@@ -234,7 +217,7 @@ namespace Flick {
 			Application::Get().GetImguiLayer()->BlockEvents(!m_ViewportFocus || !m_ViewportHover);
 
 			ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-			if (m_Viewport != *((glm::vec2*)&viewportPanelSize)) {
+			if (m_Viewport != *((glm::vec2*)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0) {
 				m_FrameBuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
 				m_Viewport = {viewportPanelSize.x, viewportPanelSize.y};
 

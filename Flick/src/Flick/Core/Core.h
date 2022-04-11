@@ -63,7 +63,7 @@
 	#define FI_ENABLE_ASSERTS
 #endif //enabling asserts for debug mode only
 
-
+//TODO:: make this macro take only condition, no other arguments
 #ifdef FI_ENABLE_ASSERTS
 	#define FI_ASSERT(x, ...) {if (!(x)) {FI_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
 	#define FI_CORE_ASSERT(x, ...) {if (!(x)) {FI_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
