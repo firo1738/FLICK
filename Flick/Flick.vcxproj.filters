@@ -22,6 +22,9 @@
     <Filter Include="src\Flick\Renderer">
       <UniqueIdentifier>{CB2F93E7-B713-543D-2074-4E900C773EBF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Flick\Scene">
+      <UniqueIdentifier>{6243E2F3-CECE-4FB8-D7DF-D2AC43EAABB8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
@@ -149,6 +152,12 @@
     </ClInclude>
     <ClInclude Include="src\Flick\Renderer\VertexArray.h">
       <Filter>src\Flick\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Flick\Scene\Components.h">
+      <Filter>src\Flick\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Flick\Scene\Scene.h">
+      <Filter>src\Flick\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
@@ -1425,8 +1434,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Flick\Scene\Scene.h" />
-    <ClInclude Include="src\Flick\Scene\Components.h" />
+    <ClInclude Include="src\Flick\Scene\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Flick\Core\Application.cpp">
@@ -1486,6 +1494,9 @@
     <ClCompile Include="src\Flick\Renderer\VertexArray.cpp">
       <Filter>src\Flick\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Flick\Scene\Scene.cpp">
+      <Filter>src\Flick\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1519,6 +1530,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Flick\Scene\Scene.cpp" />
+    <ClCompile Include="src\Flick\Scene\Entity.cpp" />
   </ItemGroup>
 </Project>

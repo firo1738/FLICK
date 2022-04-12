@@ -50,7 +50,7 @@ namespace Flick
 
 		bool m_Rotation;
 
-		glm::vec3 m_CameraPosition = {0.0f, 0.0f, 0.0f};
+		glm::vec3 m_CameraPosition = {0.0f, 0.0f, 0.6f};
 		float m_CameraRotation = 0.0f;//in degrees, in the anto-clockwise direction
 		float m_CameraTranslationSpeed = 5.0f, m_CameraRotationSpeed = 180.0f;
 	};

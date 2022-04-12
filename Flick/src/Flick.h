@@ -13,6 +13,7 @@
 #include "Flick/ImGui/ImGuiLayer.h"
 
 #include "Flick/Scene/Scene.h"
+#include "Flick/Scene/Entity.h"
 #include "Flick/Scene/Components.h"
 
 //----Renderer-----------

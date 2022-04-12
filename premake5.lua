@@ -1,6 +1,6 @@
 workspace "Flick"
 	architecture "x86_64"
-	startproject "Sandbox"
+	startproject "Flick-Editor"
 
 	configurations
 	{
