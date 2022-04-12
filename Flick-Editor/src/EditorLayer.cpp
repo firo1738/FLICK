@@ -67,6 +67,13 @@ namespace Flick {
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
 
 		m_SquareEntity = square;
+
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+		m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+
+		m_SecondCamera = m_ActiveScene->CreateEntity("Clip-Space Camera");
+		auto& cc = m_SecondCamera.AddComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		cc.Primary = false;
 	}
 
 	void EditorLayer::OnDetach()
@@ -88,9 +95,6 @@ namespace Flick {
 		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 		RenderCommand::Clear();
 
-		
-
-		Flick::Renderer2D::BeginScene(m_CameraController.GetCamera());
 		//Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.5f }, { 1.0f, 1.0f }, m_Tile_Door);
 		//Renderer2D::DrawQuad({ 1.0f, 0.0f, 0.5f }, { 1.0f, 2.0f }, m_Tile_Roof);
 		//
@@ -121,8 +125,6 @@ namespace Flick {
 
 		//update scene
 		m_ActiveScene->OnUpdate(ts);
-
-		Flick::Renderer2D::EndScene();
 
 		m_FrameBuffer->unBind();
 	}
@@ -211,6 +213,23 @@ namespace Flick {
 
 				auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
 				ImGui::ColorEdit4("Color Editor", glm::value_ptr(squareColor));
+
+				ImGui::Separator();
+			}
+
+			{
+				ImGui::DragFloat3("Main Camera Transform",
+					glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
+
+			}
+
+			{
+				ImGui::Separator();
+
+				if (ImGui::Checkbox("Main Camera", &m_PrimaryCamera)) {
+					m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
+					m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
+				}
 
 				ImGui::Separator();
 			}

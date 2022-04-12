@@ -2,6 +2,8 @@
 
 #include "glm/glm.hpp"
 
+#include "Flick/Renderer/Camera.h"
+
 namespace Flick {
 
 	struct TagComponent
@@ -35,5 +37,16 @@ namespace Flick {
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color)
 			:Color(color) {}
+	};
+
+	struct CameraComponent
+	{
+		Flick::Camera Camera;
+		bool Primary = true;
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const glm::mat4& projection)
+			: Camera(projection) {}
 	};
 }
