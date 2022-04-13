@@ -69,10 +69,10 @@ namespace Flick {
 		m_SquareEntity = square;
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-		m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+		m_CameraEntity.AddComponent<CameraComponent>();
 
 		m_SecondCamera = m_ActiveScene->CreateEntity("Clip-Space Camera");
-		auto& cc = m_SecondCamera.AddComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
 	}
 
@@ -84,6 +84,17 @@ namespace Flick {
 	void EditorLayer::OnUpdate(Timestep ts)
 	{
 		FI_PROFILE_FUNCTION();
+
+		//Resize
+		if (FrameBufferSpecifications spec = m_FrameBuffer->getSpecifications();
+			m_Viewport.x > 0.0f && m_Viewport.y > 0.0f && //frame buffer with size 0 invalid
+			(spec.Width != m_Viewport.x || spec.Height != m_Viewport.y)) 
+		{
+			m_FrameBuffer->Resize((uint32_t)m_Viewport.x, (uint32_t)m_Viewport.y);
+			m_CameraController.OnResize(m_Viewport.x, m_Viewport.y);
+		
+			m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.x, (uint32_t)m_Viewport.y);
+		}
 
 		//update
 		if (m_ViewportFocus)
@@ -234,6 +245,13 @@ namespace Flick {
 				ImGui::Separator();
 			}
 
+			{
+				auto& camera = m_SecondCamera.GetComponent<CameraComponent>().Camera;
+				float ortho = camera.GetOrthographicSize();
+				if (ImGui::DragFloat("Second Camera Ortho Size", &ortho))
+					camera.SetOrthographicSize(ortho);
+			}
+
 			ImGui::End();
 
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{0, 0});
@@ -244,12 +262,7 @@ namespace Flick {
 			Application::Get().GetImguiLayer()->BlockEvents(!m_ViewportFocus || !m_ViewportHover);
 
 			ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-			if (m_Viewport != *((glm::vec2*)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0) {
-				m_FrameBuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
-				m_Viewport = {viewportPanelSize.x, viewportPanelSize.y};
-
-				m_CameraController.OnResize(viewportPanelSize.x, viewportPanelSize.y);
-			}
+			m_Viewport = {viewportPanelSize.x, viewportPanelSize.y};
 
 			uint32_t textureID = m_FrameBuffer->getColorAttachmentRendererID();
 			ImGui::Image((void*)textureID, ImVec2{ m_Viewport.x, m_Viewport.y }, { 0, 1 }, { 1, 0 });
