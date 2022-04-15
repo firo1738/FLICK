@@ -117,6 +117,9 @@
     <ClInclude Include="src\Flick\Renderer\Buffer.h">
       <Filter>src\Flick\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Flick\Renderer\Camera.h">
+      <Filter>src\Flick\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Flick\Renderer\FrameBuffer.h">
       <Filter>src\Flick\Renderer</Filter>
     </ClInclude>
@@ -156,7 +159,16 @@
     <ClInclude Include="src\Flick\Scene\Components.h">
       <Filter>src\Flick\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Flick\Scene\Entity.h">
+      <Filter>src\Flick\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Flick\Scene\Scene.h">
+      <Filter>src\Flick\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Flick\Scene\SceneCamera.h">
+      <Filter>src\Flick\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Flick\Scene\ScriptableEntity.h">
       <Filter>src\Flick\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
@@ -1434,9 +1446,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Flick\Scene\Entity.h" />
-    <ClInclude Include="src\Flick\Renderer\Camera.h" />
-    <ClInclude Include="src\Flick\Scene\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Flick\Core\Application.cpp">
@@ -1496,7 +1505,13 @@
     <ClCompile Include="src\Flick\Renderer\VertexArray.cpp">
       <Filter>src\Flick\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Flick\Scene\Entity.cpp">
+      <Filter>src\Flick\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Flick\Scene\Scene.cpp">
+      <Filter>src\Flick\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Flick\Scene\SceneCamera.cpp">
       <Filter>src\Flick\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1532,7 +1547,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Flick\Scene\Entity.cpp" />
-    <ClCompile Include="src\Flick\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>
