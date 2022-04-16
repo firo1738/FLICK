@@ -1,6 +1,6 @@
 workspace "Flick"
 	architecture "x86_64"
-	startproject "Flick-Editor"
+	startproject "FlickArc"
 
 	configurations
 	{
@@ -155,8 +155,8 @@ project "Sandbox"
 			runtime "Release"
 			optimize "on"
 
-project "Flick-Editor"
-	location "Flick-Editor"
+project "FlickArc"
+	location "FlickArc"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
