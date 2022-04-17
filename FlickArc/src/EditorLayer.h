@@ -3,6 +3,7 @@
 #include <Flick.h>
 
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/Panel.h"
 
 namespace Flick {
 	class EditorLayer : public Layer
@@ -46,6 +47,7 @@ namespace Flick {
 		Ref<FrameBuffer> m_FrameBuffer;
 
 		//panels
+		Panel m_NewPanel;
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 	};
 }

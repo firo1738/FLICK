@@ -107,6 +107,8 @@ namespace Flick {
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+		//TODO: Give the abilites to create properties on new panels
+		//m_NewPanel.SetContext(m_ActiveScene);
 	}
 
 	void EditorLayer::OnDetach()
@@ -241,6 +243,7 @@ namespace Flick {
 			}
 
 			//panels
+			//m_NewPanel.CreatePanel("New Panel");
 			m_SceneHierarchyPanel.OnImGuiRender();
 
 			ImGui::Begin("Settings");
