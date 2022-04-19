@@ -12,9 +12,20 @@ namespace Flick {
 
 	void SceneCamera::SetOrthographic(float size, float nearclip, float farclip)
 	{
+		m_ProjectionType = ProjectionType::Orthographic;
 		m_OrthographicSize = size;
 		m_OrthographicNear = nearclip;
 		m_OrthographicFar = farclip;
+
+		RecalculateProjection();
+	}
+
+	void SceneCamera::SetPerspective(float fov, float nearclip, float farclip)
+	{
+		m_ProjectionType = ProjectionType::Perspective;
+		m_PerspectiveFov = fov;
+		m_PerspectiveNear = nearclip;
+		m_PerspectiveFar = farclip;
 
 		RecalculateProjection();
 	}
@@ -28,12 +39,19 @@ namespace Flick {
 
 	void SceneCamera::RecalculateProjection()
 	{
-		float orthoLeft = -m_OrthographicSize * m_AspectRatio * 0.5;
-		float orthoRight = m_OrthographicSize * m_AspectRatio * 0.5;
-		float orthoBottom = -m_OrthographicSize * 0.5;
-		float orthoTop = m_OrthographicSize * 0.5;
+		if (m_ProjectionType == ProjectionType::Perspective)
+		{
+			m_Projection = glm::perspective(m_PerspectiveFov, m_AspectRatio, m_PerspectiveNear, m_PerspectiveFar);
+		}
+		else
+		{
+			double orthoLeft = -m_OrthographicSize * m_AspectRatio * 0.5;
+			double orthoRight = m_OrthographicSize * m_AspectRatio * 0.5;
+			double orthoBottom = -m_OrthographicSize * 0.5;
+			double orthoTop = m_OrthographicSize * 0.5;
 
-		m_Projection = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, m_OrthographicNear, m_OrthographicFar);
+			m_Projection = glm::ortho((float)orthoLeft, (float)orthoRight, (float)orthoBottom, (float)orthoTop, m_OrthographicNear, m_OrthographicFar);
+		}
 	}
 
 }
