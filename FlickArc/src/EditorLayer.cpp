@@ -71,10 +71,10 @@ namespace Flick {
 
 		m_SquareEntity = square;
 
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
 		m_CameraEntity.AddComponent<CameraComponent>();
 
-		m_SecondCamera = m_ActiveScene->CreateEntity("Clip-Space Camera");
+		m_SecondCamera = m_ActiveScene->CreateEntity("Camera B");
 		auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
 
@@ -83,8 +83,8 @@ namespace Flick {
 		public:
 			void OnCreate()
 			{
-				auto& transform = GetComponent<TransformComponent>().Transform;
-				transform[3][0] = rand() % 10 - 5.0f;
+				auto& translation = GetComponent<TransformComponent>().Translation;
+				translation.x = rand() % 10 - 5.0f;
 			}
 
 			void OnDestroy()
@@ -92,17 +92,17 @@ namespace Flick {
 			}
 
 			void OnUpdate(Timestep ts) {
-				auto& transform = GetComponent<TransformComponent>().Transform;
+				auto& translation = GetComponent<TransformComponent>().Translation;
 				float speed = 5.0f;
 
 				if (Input::IsKeyPressed(KeyCode::A))
-					transform[3][0] -= speed * ts;
+					translation.x -= speed * ts;
 				if (Input::IsKeyPressed(KeyCode::D))
-					transform[3][0] += speed * ts;
+					translation.x += speed * ts;
 				if (Input::IsKeyPressed(KeyCode::W))
-					transform[3][1] += speed * ts;
+					translation.y += speed * ts;
 				if (Input::IsKeyPressed(KeyCode::S))
-					transform[3][1] -= speed * ts;
+					translation.y -= speed * ts;
 			}
 		};
 
@@ -249,7 +249,7 @@ namespace Flick {
 			//m_NewPanel.CreatePanel("New Panel");
 			m_SceneHierarchyPanel.OnImGuiRender();
 
-			ImGui::Begin("Settings");
+			ImGui::Begin("Stats");
 
 			auto stats = Renderer2D::GetStats();
 			ImGui::Text("Renderer2D Stats:");
@@ -257,42 +257,6 @@ namespace Flick {
 			ImGui::Text("Quad Count: %d", stats.QuadCount);
 			ImGui::Text("Vertex Count: %d", stats.GetTotalVertexCount());
 			ImGui::Text("Index Count: %d", stats.GetTotalIndexCount());
-
-			if (m_SquareEntity) {
-				ImGui::Separator();
-
-				auto& tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
-				ImGui::Text("%s", tag.c_str());
-
-				auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
-				ImGui::ColorEdit4("Color Editor", glm::value_ptr(squareColor));
-
-				ImGui::Separator();
-			}
-
-			{
-				ImGui::DragFloat3("Main Camera Transform",
-					glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
-
-			}
-
-			{
-				ImGui::Separator();
-
-				if (ImGui::Checkbox("Main Camera", &m_PrimaryCamera)) {
-					m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
-					m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
-				}
-
-				ImGui::Separator();
-			}
-
-			{
-				auto& camera = m_SecondCamera.GetComponent<CameraComponent>().Camera;
-				float ortho = camera.GetOrthographicSize();
-				if (ImGui::DragFloat("Second Camera Ortho Size", &ortho))
-					camera.SetOrthographicSize(ortho);
-			}
 
 			ImGui::End();
 
