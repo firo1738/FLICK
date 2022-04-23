@@ -24,12 +24,14 @@ IncludeDir["ImGui"] = "Flick/vendor/imgui"
 IncludeDir["glm"] = "Flick/vendor/glm"
 IncludeDir["stb_image"] = "Flick/vendor/stb_image"
 IncludeDir["entt"] = "Flick/vendor/entt/include"
+IncludeDir["yaml_cpp"] = "Flick/vendor/yaml-cpp/include"
 
 
 group "Dependencies"
 	include "Flick/vendor/GLFW"
 	include "Flick/vendor/Glad"
 	include "Flick/vendor/imgui"
+	include "Flick/vendor/yaml-cpp"
 
 group ""
 
@@ -71,7 +73,8 @@ project "Flick"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}"
 
 	}
 
@@ -80,6 +83,7 @@ project "Flick"
 		"GLFW",
 		"Glad",
 		"ImGui",
+		"yaml-cpp",
 		"opengl32.lib"
 	}
 
@@ -129,7 +133,8 @@ project "Sandbox"
 		"Flick/src",
 		"Flick/vendor",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}"
 	}
 
 	links
@@ -177,7 +182,8 @@ project "FlickArc"
 		"Flick/src",
 		"Flick/vendor",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}"
 	}
 
 	links

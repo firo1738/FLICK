@@ -6,6 +6,8 @@
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
+#include "Flick/Scene/SceneSerializer.h"
+
 //const int s_MapWidth = 24;
 //static const char* s_TileMap = 
 //"LUUUUUUUUUUUUUUUUUUUUUUR"
@@ -62,7 +64,9 @@ namespace Flick {
 		m_CameraController.SetZoomLevel(1.0f);
 
 		m_ActiveScene = CreateRef<Scene>();
+#if 0
 
+		//Entity
 		auto square = m_ActiveScene->CreateEntity("Red Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
 
@@ -108,7 +112,7 @@ namespace Flick {
 
 		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();//bind intanciates all the fns for the cameracontroller class, that is create as a native script.
 		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-
+#endif
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 		//TODO: Give the abilites to create properties on new panels
 		//m_NewPanel.SetContext(m_ActiveScene);
@@ -227,17 +231,33 @@ namespace Flick {
 
 			// DockSpace
 			ImGuiIO& io = ImGui::GetIO();
+			ImGuiStyle& style = ImGui::GetStyle();
+			float minWinSize = style.WindowMinSize.x;
+			style.WindowMinSize.x = 420.0f;
 			if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 			{
 				ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 				ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
 			}
+			style.WindowMinSize.x = minWinSize;
 
 			if (ImGui::BeginMenuBar())
 			{
 				if (ImGui::BeginMenu("File"))
 				{
 					if (ImGui::MenuItem("Exit")) Application::Get().Close();
+
+					if (ImGui::MenuItem("Serialize"))
+					{
+						SceneSerializer Serializer(m_ActiveScene);
+						Serializer.Serialize("assets/scene/Examplefile.flick");
+					}
+
+					if (ImGui::MenuItem("DeSerialize"))
+					{
+						SceneSerializer Serializer(m_ActiveScene);
+						Serializer.DeSerialize("assets/scene/Examplefile.flick");
+					}
 
 					ImGui::EndMenu();
 				}
@@ -269,7 +289,6 @@ namespace Flick {
 
 			ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 			m_Viewport = {viewportPanelSize.x, viewportPanelSize.y};
-
 			uint32_t textureID = m_FrameBuffer->getColorAttachmentRendererID();
 			ImGui::Image((void*)textureID, ImVec2{ m_Viewport.x, m_Viewport.y }, { 0, 1 }, { 1, 0 });
 

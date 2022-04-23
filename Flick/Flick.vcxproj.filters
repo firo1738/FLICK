@@ -168,6 +168,9 @@
     <ClInclude Include="src\Flick\Scene\SceneCamera.h">
       <Filter>src\Flick\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Flick\Scene\SceneSerializer.h">
+      <Filter>src\Flick\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Flick\Scene\ScriptableEntity.h">
       <Filter>src\Flick\Scene</Filter>
     </ClInclude>
@@ -1512,6 +1515,9 @@
       <Filter>src\Flick\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Flick\Scene\SceneCamera.cpp">
+      <Filter>src\Flick\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Flick\Scene\SceneSerializer.cpp">
       <Filter>src\Flick\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">

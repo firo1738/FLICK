@@ -8,16 +8,16 @@
 #include "EditorLayer.h"
 
 namespace Flick {
-	class FlickEditor : public Application
+	class FlickArc : public Application
 	{
 	public:
-		FlickEditor()
-			:Application("Flick Editor")
+		FlickArc()
+			:Application("FlickArc")
 		{
 			PushLayer(new EditorLayer());
 		}
 
-		~FlickEditor()
+		~FlickArc()
 		{
 
 		}
@@ -25,6 +25,6 @@ namespace Flick {
 
 	Application* CreateApplication()
 	{
-		return new FlickEditor();
+		return new FlickArc();
 	}
 }

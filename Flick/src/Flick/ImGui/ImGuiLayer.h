@@ -24,6 +24,7 @@ namespace Flick
 		void Begin();
 		void End();
 		
+		void SetDarkThemeColors();
 	private:
 		bool m_Block = true;
 		float m_Time = 0.0f;
