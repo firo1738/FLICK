@@ -25,6 +25,7 @@ IncludeDir["glm"] = "Flick/vendor/glm"
 IncludeDir["stb_image"] = "Flick/vendor/stb_image"
 IncludeDir["entt"] = "Flick/vendor/entt/include"
 IncludeDir["yaml_cpp"] = "Flick/vendor/yaml-cpp/include"
+IncludeDir["imguizmo"] = "Flick/vendor/imguizmo"
 
 
 group "Dependencies"
@@ -55,7 +56,10 @@ project "Flick"
 		"%{prj.name}/vendor/stb_image/**.h",
 		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
-		"%{prj.name}/vendor/glm/glm/**.inl"
+		"%{prj.name}/vendor/glm/glm/**.inl",
+
+		"%{prj.name}/vendor/imguizmo/ImGuizmo.h",
+		"%{prj.name}/vendor/imguizmo/ImGuizmo.cpp"
 	}
 
 	defines
@@ -74,7 +78,8 @@ project "Flick"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
-		"%{IncludeDir.yaml_cpp}"
+		"%{IncludeDir.yaml_cpp}",
+		"%{IncludeDir.imguizmo}"
 
 	}
 
@@ -86,6 +91,9 @@ project "Flick"
 		"yaml-cpp",
 		"opengl32.lib"
 	}
+
+	filter "files:Flick/vendor/imguizmo/**.cpp"
+	flags {"NoPCH"}
 
 	filter "system:windows"
 		systemversion "latest"

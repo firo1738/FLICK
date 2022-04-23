@@ -19,6 +19,12 @@ namespace Flick {
 		virtual void OnImGuiRender() override;
 		virtual void OnEvent(Event& event) override;
 	private:
+		bool OnKeyPressed(KeyPressedEvent& e);
+
+		void NewScene();
+		void OpenScene();
+		void SaveSceneAs();
+	private:
 		Flick::OrthographicCameraController m_CameraController;
 
 		Ref<Scene> m_ActiveScene;

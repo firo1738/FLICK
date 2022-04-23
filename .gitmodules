@@ -7,3 +7,6 @@
 [submodule "Flick/vendor/yaml-cpp"]
 	path = Flick/vendor/yaml-cpp
 	url = https://github.com/TheCherno/yaml-cpp.git
+[submodule "Flick/vendor/imguizmo"]
+	path = Flick/vendor/imguizmo
+	url = https://github.com/TheCherno/ImGuizmo.git

@@ -17,6 +17,7 @@ namespace Flick {
 	void SceneHierarchyPanel::SetContext(Ref<Scene>& context)
 	{
 		m_Context = context;
+		m_SelectionContext = {};
 	}
 
 	void SceneHierarchyPanel::OnImGuiRender()
@@ -77,7 +78,7 @@ namespace Flick {
 		if (opened)
 		{
 			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
-			bool open = ImGui::TreeNodeEx((void*)6445, flags, tag.c_str());
+			bool open = ImGui::TreeNodeEx((void*)64455115, flags, tag.c_str());
 			if (open) {
 				ImGui::TreePop();
 			}
@@ -281,7 +282,7 @@ namespace Flick {
 				if (camera.GetProjectionType() == SceneCamera::ProjectionType::Perspective)
 				{
 					float vertFov = glm::degrees(camera.GetPerspectiveVerticalFov());
-					if (ImGui::DragFloat("Size", &vertFov))
+					if (ImGui::DragFloat("VertFov", &vertFov))
 						camera.SetPerspectiveVerticalFov(glm::radians(vertFov));
 
 					float perspectiveNear = camera.GetPerspectiveNearClip();

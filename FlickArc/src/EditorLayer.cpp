@@ -7,6 +7,7 @@
 #include "Platform/OpenGL/OpenGLShader.h"
 
 #include "Flick/Scene/SceneSerializer.h"
+#include "Flick/Utils/PlatformUtils.h"
 
 //const int s_MapWidth = 24;
 //static const char* s_TileMap = 
@@ -245,19 +246,28 @@ namespace Flick {
 			{
 				if (ImGui::BeginMenu("File"))
 				{
+					if (ImGui::MenuItem("New", "Ctrl+N"))
+					{
+						NewScene();
+					}
+
+					ImGui::Separator();
+
+					if (ImGui::MenuItem("Open...", "Ctrl+O"))
+					{
+						OpenScene();
+					}
+
+					ImGui::Separator();
+
+					if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+					{
+						SaveSceneAs();
+					}
+
+					ImGui::Separator();
+
 					if (ImGui::MenuItem("Exit")) Application::Get().Close();
-
-					if (ImGui::MenuItem("Serialize"))
-					{
-						SceneSerializer Serializer(m_ActiveScene);
-						Serializer.Serialize("assets/scene/Examplefile.flick");
-					}
-
-					if (ImGui::MenuItem("DeSerialize"))
-					{
-						SceneSerializer Serializer(m_ActiveScene);
-						Serializer.DeSerialize("assets/scene/Examplefile.flick");
-					}
 
 					ImGui::EndMenu();
 				}
@@ -302,5 +312,69 @@ namespace Flick {
 	void EditorLayer::OnEvent(Event& e)
 	{
 		m_CameraController.OnEvent(e);
+
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<KeyPressedEvent>(FI_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+	{
+		//file shotcuts
+		if (e.GetRepeatCount() > 0)
+			return false;
+
+		bool control = Input::IsKeyPressed(FI_KEY_LEFT_CONTROL) || Input::IsKeyPressed(FI_KEY_RIGHT_CONTROL);
+		bool shift = Input::IsKeyPressed(FI_KEY_LEFT_SHIFT) || Input::IsKeyPressed(FI_KEY_RIGHT_SHIFT);
+
+		switch (e.GetKeyCode())
+		{
+		case FI_KEY_N:
+		{
+			NewScene();
+			break;
+		}
+		case FI_KEY_O:
+		{
+			if (control)
+				OpenScene();
+			break;
+		}
+		case FI_KEY_S:
+		{
+			if (control && shift)
+				SaveSceneAs();
+			break;
+		}
+		}
+	}
+	void EditorLayer::NewScene()
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.x, (uint32_t)m_Viewport.y);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filepath = FileDialogs::OpenFile("Flick Scene(*.flick)\0 * .flick\0");
+		if (!filepath.empty())
+		{
+			m_ActiveScene = CreateRef<Scene>();
+			m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.x, (uint32_t)m_Viewport.y);
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+			SceneSerializer Serializer(m_ActiveScene);
+			Serializer.DeSerialize(filepath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string filepath = FileDialogs::SaveFile("Flick Scene(*.flick)\0 * .flick\0");
+		if (!filepath.empty())
+		{
+			SceneSerializer Serializer(m_ActiveScene);
+			Serializer.Serialize(filepath);
+		}
 	}
 }
