@@ -2,6 +2,30 @@
 #include "Flick/Core/Core.h"
 
 namespace Flick {
+	enum class FrameBufferTextureFormat
+	{
+		None = 0,
+
+		//color
+		RGBA8,
+
+		//depth/stencil
+		DEPTH24STENCIL8,
+
+		//defaults
+		Depth = DEPTH24STENCIL8
+	};
+
+	struct FrameBufferTextureSpecifications
+	{
+		FrameBufferTextureSpecifications() = default;
+		FrameBufferTextureSpecifications(FrameBufferTextureFormat format)
+			:TextureFormat(format) {}
+
+		FrameBufferTextureFormat TextureFormat;
+		//TODO: filtering/wrap
+	};
+
 	struct FrameBufferSpecifications
 	{
 		uint32_t Width, Height;

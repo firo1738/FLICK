@@ -9,6 +9,10 @@
 #include "Flick/Scene/SceneSerializer.h"
 #include "Flick/Utils/PlatformUtils.h"
 
+#include <imguizmo/ImGuizmo.h>
+
+#include <Flick/Math/Math.h>
+
 //const int s_MapWidth = 24;
 //static const char* s_TileMap = 
 //"LUUUUUUUUUUUUUUUUUUUUUUR"
@@ -63,6 +67,8 @@ namespace Flick {
 		m_FrameBuffer = Flick::FrameBuffer::create(fbspec);
 
 		m_CameraController.SetZoomLevel(1.0f);
+
+		m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
 		m_ActiveScene = CreateRef<Scene>();
 #if 0
@@ -135,13 +141,15 @@ namespace Flick {
 		{
 			m_FrameBuffer->Resize((uint32_t)m_Viewport.x, (uint32_t)m_Viewport.y);
 			m_CameraController.OnResize(m_Viewport.x, m_Viewport.y);
-		
+			m_EditorCamera.SetViewportSize(m_Viewport.x, m_Viewport.y);
 			m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.x, (uint32_t)m_Viewport.y);
 		}
 
 		//update
 		if (m_ViewportFocus)
 			m_CameraController.OnUpdate(ts);
+			
+		m_EditorCamera.OnUpdate(ts);
 
 		//render
 		Renderer2D::ResetStats();
@@ -178,7 +186,7 @@ namespace Flick {
 		//}
 
 		//update scene
-		m_ActiveScene->OnUpdate(ts);
+		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
 		m_FrameBuffer->unBind();
 	}
@@ -260,6 +268,13 @@ namespace Flick {
 
 					ImGui::Separator();
 
+					if (ImGui::MenuItem("Save", "Ctrl+S"))
+					{
+						SaveCurrentScene();
+					}
+
+					ImGui::Separator();
+
 					if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 					{
 						SaveSceneAs();
@@ -295,12 +310,62 @@ namespace Flick {
 
 			m_ViewportFocus = ImGui::IsWindowFocused();
 			m_ViewportHover = ImGui::IsWindowHovered();
-			Application::Get().GetImguiLayer()->BlockEvents(!m_ViewportFocus || !m_ViewportHover);
+			Application::Get().GetImguiLayer()->BlockEvents(!m_ViewportFocus && !m_ViewportHover);
 
 			ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 			m_Viewport = {viewportPanelSize.x, viewportPanelSize.y};
 			uint32_t textureID = m_FrameBuffer->getColorAttachmentRendererID();
 			ImGui::Image((void*)textureID, ImVec2{ m_Viewport.x, m_Viewport.y }, { 0, 1 }, { 1, 0 });
+
+			//gizmo
+			Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
+			if (selectedEntity && m_GizmoType != -1)
+			{
+				ImGuizmo::SetOrthographic(false);
+				ImGuizmo::SetDrawlist();
+
+				float windowWidth = ImGui::GetWindowWidth();
+				float windowHeight = ImGui::GetWindowHeight();
+				ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+
+				//camera
+				//runtime camera from entity
+				//auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+				//const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+				//const glm::mat4& cameraProjection = camera.GetProjection();
+				//glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+
+				//editor camera
+				const glm::mat4& cameraProjection = m_EditorCamera.GetProjection();
+				glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
+
+				//entity transform
+				auto& tc = selectedEntity.GetComponent<TransformComponent>();
+				glm::mat4 transform = tc.GetTransform();
+
+				//snapping
+				bool snap = Input::IsKeyPressed(FI_KEY_LEFT_CONTROL);
+				float snapvalue = 0.5f; //snap to 0.5m for translate and scale
+				if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
+					snapvalue = 45.0f; //snap to 45degrees for rotation
+
+				float snapValues[3] = {snapvalue, snapvalue, snapvalue};
+
+				ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), (ImGuizmo::OPERATION)m_GizmoType, 
+					ImGuizmo::MODE::LOCAL, glm::value_ptr(transform), nullptr, snap ? snapValues : nullptr);
+
+				if (ImGuizmo::IsUsing())
+				{
+					glm::vec3 translation, rotation, scale;
+					Math::DecomposeTransform(transform, translation, rotation, scale);
+					//to avoid gimblelock
+					glm::vec3 deltaRotation = rotation - tc.Rotation;
+
+					tc.Translation = translation;
+					tc.Rotation += deltaRotation;
+					tc.Scale = scale;
+				}
+			}
 
 			ImGui::End();
 			ImGui::PopStyleVar();
@@ -312,6 +377,7 @@ namespace Flick {
 	void EditorLayer::OnEvent(Event& e)
 	{
 		m_CameraController.OnEvent(e);
+		m_EditorCamera.OnEvent(e);
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(FI_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
@@ -319,7 +385,7 @@ namespace Flick {
 
 	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
 	{
-		//file shotcuts
+		//shotcuts
 		if (e.GetRepeatCount() > 0)
 			return false;
 
@@ -328,6 +394,28 @@ namespace Flick {
 
 		switch (e.GetKeyCode())
 		{
+		//switch gizmotype
+		case FI_KEY_Q:
+		{
+			m_GizmoType = -1;
+			break;
+		}
+		case FI_KEY_W:
+		{
+			m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			break;
+		}
+		case FI_KEY_E:
+		{
+			m_GizmoType = ImGuizmo::OPERATION::SCALE;
+			break;
+		}
+		case FI_KEY_R:
+		{
+			m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+			break;
+		}
+		//file shotcuts
 		case FI_KEY_N:
 		{
 			NewScene();
@@ -342,13 +430,21 @@ namespace Flick {
 		case FI_KEY_S:
 		{
 			if (control && shift)
+			{
 				SaveSceneAs();
-			break;
+				break;
+			}
+			else if (control)
+			{
+				SaveCurrentScene();
+				break;
+			}
 		}
 		}
 	}
 	void EditorLayer::NewScene()
 	{
+		m_Filepath = "";
 		m_ActiveScene = CreateRef<Scene>();
 		m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.x, (uint32_t)m_Viewport.y);
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
@@ -365,7 +461,21 @@ namespace Flick {
 
 			SceneSerializer Serializer(m_ActiveScene);
 			Serializer.DeSerialize(filepath);
+			m_Filepath = filepath;
 		}
+	}
+
+	void EditorLayer::SaveCurrentScene()
+	{
+		const std::string filepath = m_Filepath;
+
+		if (!filepath.empty())
+		{
+			SceneSerializer Serializer(m_ActiveScene);
+			Serializer.Serialize(filepath);
+		}
+		else
+			SaveSceneAs();
 	}
 
 	void EditorLayer::SaveSceneAs()

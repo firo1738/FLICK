@@ -14,6 +14,8 @@ namespace Flick {
 		void SetContext(Ref<Scene>& context);
 
 		void OnImGuiRender();
+
+		Entity GetSelectedEntity() const { return m_SelectionContext; }
 	private:
 		void DrawEntityNode(Entity entity);
 

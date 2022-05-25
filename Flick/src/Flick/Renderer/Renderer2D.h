@@ -6,6 +6,8 @@
 #include "Texture.h"
 #include "SubTexture2D.h"
 
+#include "EditorCamera.h"
+
 namespace Flick
 {
 	class Renderer2D
@@ -15,6 +17,7 @@ namespace Flick
 		static void Shutdown();
 
 		static void BeginScene(const Camera& camera, glm::mat4& transform);
+		static void BeginScene(const EditorCamera& camera);
 		static void BeginScene(const OrthographicCamera& camera); //TODO: Remove
 		static void EndScene();
 		static void Flush();

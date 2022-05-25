@@ -5,6 +5,8 @@
 #include "Panels/SceneHierarchyPanel.h"
 #include "Panels/Panel.h"
 
+#include "Flick/Renderer/EditorCamera.h"
+
 namespace Flick {
 	class EditorLayer : public Layer
 	{
@@ -23,6 +25,7 @@ namespace Flick {
 
 		void NewScene();
 		void OpenScene();
+		void SaveCurrentScene();
 		void SaveSceneAs();
 	private:
 		Flick::OrthographicCameraController m_CameraController;
@@ -52,8 +55,15 @@ namespace Flick {
 
 		Ref<FrameBuffer> m_FrameBuffer;
 
+		EditorCamera m_EditorCamera;
+
 		//panels
 		Panel m_NewPanel;
 		SceneHierarchyPanel m_SceneHierarchyPanel;
+
+		int m_GizmoType = -1;
+
+		//scene filepath
+		std::string m_Filepath;
 	};
 }

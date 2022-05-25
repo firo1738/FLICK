@@ -34,7 +34,22 @@ namespace Flick {
 		m_Registry.destroy(entity);
 	}
 
-	void Scene::OnUpdate(Timestep ts)
+	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
+	{
+		Renderer2D::BeginScene(camera);
+
+		auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+		for (auto entity : group)
+		{
+			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+
+			Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
+		}
+
+		Renderer2D::EndScene();
+	}
+
+	void Scene::OnUpdateRuntime(Timestep ts)
 	{
 		//update script
 		{
@@ -97,6 +112,18 @@ namespace Flick {
 				cameraComponent.Camera.SetViewportSize(width, height);
 			}
 		}
+	}
+
+	Entity Scene::GetPrimaryCameraEntity()
+	{
+		auto view = m_Registry.view<CameraComponent>();
+		for (auto entity : view)
+		{
+			auto& cc = view.get<CameraComponent>(entity);
+			if (cc.Primary)
+				return Entity{entity, this};
+		}
+		return {};
 	}
 
 	template<typename T>

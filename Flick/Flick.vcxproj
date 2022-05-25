@@ -162,8 +162,10 @@
     <ClInclude Include="src\Flick\Events\KeyEvent.h" />
     <ClInclude Include="src\Flick\Events\MouseEvent.h" />
     <ClInclude Include="src\Flick\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Flick\Math\Math.h" />
     <ClInclude Include="src\Flick\Renderer\Buffer.h" />
     <ClInclude Include="src\Flick\Renderer\Camera.h" />
+    <ClInclude Include="src\Flick\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Flick\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Flick\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Flick\Renderer\OrthographicCamera.h" />
@@ -618,7 +620,9 @@
     <ClCompile Include="src\Flick\Core\Window.cpp" />
     <ClCompile Include="src\Flick\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Flick\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Flick\Math\Math.cpp" />
     <ClCompile Include="src\Flick\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Flick\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Flick\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Flick\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Flick\Renderer\OrthographicCameraController.cpp" />
